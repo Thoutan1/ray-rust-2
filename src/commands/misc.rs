@@ -9,6 +9,12 @@ use std::fs;
 
 use std::env::current_exe;
 
+use crate::settings::{
+    DEFAULT_COLOR,
+};
+
+use rand::Rng; 
+
 use chrono::offset::Utc;
 
 use chrono::DateTime;
@@ -36,8 +42,8 @@ async fn ping(context: &Context, message: &Message) -> CommandResult {
             message.reply(context, "I encountered a problem while getting the shard manager.").await?;
             return Ok(());
         }
-    };
-
+    };  
+    let num = rand::thread_rng().gen_range(0..100);
     let manager = shard_manager.lock().await;
     let runners = manager.runners.lock().await;
     let runner = match runners.get(&ShardId(context.shard_id)) {
@@ -59,14 +65,15 @@ async fn ping(context: &Context, message: &Message) -> CommandResult {
     let response = format!(
         "Pong! Succesfully retrieved the message and shard latencies. :ping_pong:\n\n\
         **API Response Time**: `{}ms`\n\
+        **Your Ping IS**: `{}ms`\n\
         **Shard Response Time**: {}",
-        api_response, shard_response
+        api_response, num, shard_response
     );
 
     ping.edit(context, |message| {
         message.content("");
         message.embed(|embed| {
-            embed.color(0x008b_0000);
+            embed.color(DEFAULT_COLOR);
             embed.title("Discord Latency Information");
             embed.description(response)
         })

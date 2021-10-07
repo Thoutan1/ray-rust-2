@@ -31,7 +31,7 @@ impl Settings {
     pub fn new() -> Result<Self, ConfigError> {
         let mut s = Config::new();
 
-        s.set_default("logging.level", "WARN")?;
+        s.set_default("logging.level", "DEBUG")?;
         s.set_default("logging.filters.rustic", "INFO")?;
 
         s.merge(File::with_name("config.toml")).unwrap();
