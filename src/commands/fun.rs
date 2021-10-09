@@ -5,11 +5,15 @@ use serenity::{
     prelude::Context,
 };
 
+
+use tokio::time::Duration;
+
 use crate::ReqwestContainer;
 
 use crate::settings::{
     DEFAULT_COLOR,
 };
+
 
 #[command]
 #[description = "Find some cute cat pictures!"]
@@ -90,6 +94,7 @@ async fn dog(ctx: &Context, msg: &Message) -> CommandResult {
 
     Ok(())
 }
+
 
 #[command]
 #[min_args(1)]

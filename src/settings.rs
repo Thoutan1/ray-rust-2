@@ -32,7 +32,7 @@ impl Settings {
         let mut s = Config::new();
 
         s.set_default("logging.level", "DEBUG")?;
-        s.set_default("logging.filters.rustic", "INFO")?;
+        s.set_default("logging.filters.ray", "INFO")?;
 
         s.merge(File::with_name("config.toml")).unwrap();
 
